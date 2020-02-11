@@ -350,11 +350,11 @@ class Command(BaseCommand):
 
     def get_ptpython(self, options):
         try:
-            from ptpython.repl import embed, run_config
+            from ptpython.repl import embed
         except ImportError:
             tb = traceback.format_exc()
             try:  # prompt_toolkit < v0.27
-                from prompt_toolkit.contrib.repl import embed, run_config
+                from prompt_toolkit.contrib.repl import embed
             except ImportError:
                 return tb
 
@@ -362,17 +362,15 @@ class Command(BaseCommand):
             imported_objects = self.get_imported_objects(options)
             history_filename = os.path.expanduser('~/.ptpython_history')
             embed(globals=imported_objects, history_filename=history_filename,
-                  vi_mode=options['vi_mode'], configure=run_config)
+                  vi_mode=options['vi_mode'])
         return run_ptpython
 
     def get_ptipython(self, options):
         try:
-            from ptpython.repl import run_config
             from ptpython.ipython import embed
         except ImportError:
             tb = traceback.format_exc()
             try:  # prompt_toolkit < v0.27
-                from prompt_toolkit.contrib.repl import run_config
                 from prompt_toolkit.contrib.ipython import embed
             except ImportError:
                 return tb
@@ -381,7 +379,7 @@ class Command(BaseCommand):
             imported_objects = self.get_imported_objects(options)
             history_filename = os.path.expanduser('~/.ptpython_history')
             embed(user_ns=imported_objects, history_filename=history_filename,
-                  vi_mode=options['vi_mode'], configure=run_config)
+                  vi_mode=options['vi_mode'])
         return run_ptipython
 
     def get_idle(self, options):
